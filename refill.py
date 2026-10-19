@@ -108,6 +108,8 @@ def main():
     changed = False
     for item in sorted(queue, key=lambda i: i["due"]):
         item.setdefault("buffer", {})
+        if item.get("status", "approved") != "approved":
+            continue  # drafts wait for your approval in the queue page
         todo = [ch for ch in CHANNELS if ch in item["text"] and not item["buffer"].get(ch)]
         if not todo:
             continue
@@ -149,7 +151,8 @@ def main():
     if changed:
         save(queue)
 
-    left = sum(1 for i in queue for ch in CHANNELS if ch in i["text"] and not i["buffer"].get(ch))
+    left = sum(1 for i in queue if i.get("status", "approved") == "approved"
+               for ch in CHANNELS if ch in i["text"] and not i["buffer"].get(ch))
     log("left", left, "posts unscheduled")
 
 

@@ -60,14 +60,45 @@ What it does:
 
 Your key is saved in a private file on your computer, outside this folder. It is never inside the project, so you cannot publish it by accident.
 
-### 3. Write your posts
+### 3. Fill your queue
 
-Open `queue.json` in any text editor. The setup created it with two example posts. Replace them with yours. Each post looks like this:
+You have two ways. Use one or both.
+
+**A. Bring your articles (Substack or any blog).** Give the tool the address and it turns your latest articles into draft posts, one per network, with the title and the link. It reads only the public feed, so it needs no login and no key:
+
+```sh
+python3 import_feed.py yourname.substack.com
+```
+
+Any blog with an RSS feed works too: `python3 import_feed.py https://yourblog.com/feed.xml`. Use `--limit 20` to import more than the default 10. Importing again never repeats an article.
+
+**B. Write your own posts** in `queue.json` (see "The post format" below), or in the page from the next step.
+
+#### Review, edit and approve in a page
+
+Imported posts are **drafts**: they are not scheduled until you approve them. Open the review page:
+
+```sh
+python3 serve.py
+```
+
+Then open http://127.0.0.1:8765 in your browser.
+
+![The queue page: drafts and approved posts, one text box per network](docs/img/queue-page.png)
+
+There you can fix the text (a counter shows each network's limit), change the day and hour, approve, send back to draft, delete, or add a new post. Click **Save changes**. Posts already in Buffer are locked, because changing them here would not change Buffer.
+
+The page only runs on your own computer, and nothing is sent to Buffer from it. When you run `refill.py`, it schedules **only the approved posts**.
+
+#### The post format
+
+If you want to edit `queue.json` by hand, each post looks like this:
 
 ![Anatomy of a post in queue.json](docs/img/queue-anatomy.svg)
 
 Tips:
 
+- `status` is optional: `"draft"` waits for approval, `"approved"` (or no `status`) is scheduled.
 - Copy a whole post block, paste it right after, and edit. Keep the commas between blocks.
 - The network names under `text` must be the ones the setup printed (for example `twitter`, `threads`, `linkedin`).
 - You can leave a network out of a post to skip it for that one.
@@ -75,7 +106,7 @@ Tips:
 
 ### 4. Run it
 
-First, make sure the queue only has **one or two posts**, then:
+First, approve **only one or two posts**, then:
 
 ```sh
 python3 refill.py
@@ -119,7 +150,7 @@ Optional: `watchdog.py` shows a notification on Mac if the refill stopped or you
 
 **"Buffer answered with an error".** The API key is wrong or expired. Create a new one and run the setup again.
 
-**Will it post something I did not write?** No. It only schedules what is in `queue.json`.
+**Will it post something I did not approve?** No. Imported articles are drafts, and only approved posts are scheduled.
 
 **I want to change the hours.** Open `config.json` and edit `grid` (24-hour format, in your time zone).
 
@@ -133,7 +164,7 @@ Optional: `watchdog.py` shows a notification on Mac if the refill stopped or you
 
 ## How it works inside
 
-For people who like details. `refill.py` reads `queue.json`, asks Buffer which posts already exist (last 21 days), counts how many are scheduled per network, and creates the missing ones up to `limit` (10 by default). Overdue items move to the next free slot on your `grid`. The Buffer post id is written back to `queue.json`, which is why re-running is safe. Everything is in two small Python files with no extra libraries.
+For people who like details. `import_feed.py` reads a public feed and adds drafts. `serve.py` is a small local page to edit and approve. `refill.py` reads `queue.json`, asks Buffer which posts already exist (last 21 days), counts how many are scheduled per network, and creates the missing ones up to `limit` (10 by default). Overdue items move to the next free slot on your `grid`. The Buffer post id is written back to `queue.json`, which is why re-running is safe. Everything is plain Python with no extra libraries.
 
 ## License
 

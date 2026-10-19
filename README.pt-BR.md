@@ -60,14 +60,45 @@ O que ele faz:
 
 A chave fica num arquivo privado no seu computador, fora desta pasta. Ela nunca está dentro do projeto, então você não consegue publicá-la sem querer.
 
-### 3. Escreva os seus posts
+### 3. Encha a sua fila
 
-Abra o `queue.json` em qualquer editor de texto. O setup criou o arquivo com dois posts de exemplo. Troque pelos seus. Cada post é assim:
+Há dois caminhos. Use um ou os dois.
+
+**A. Traga seus artigos (Substack ou qualquer blog).** Dê o endereço e a ferramenta transforma seus últimos artigos em rascunhos de post, um por rede, com o título e o link. Ela lê só o feed público, então não precisa de login nem de chave:
+
+```sh
+python3 import_feed.py seunome.substack.com
+```
+
+Qualquer blog com feed RSS também serve: `python3 import_feed.py https://seublog.com/feed.xml`. Use `--limit 20` para importar mais que os 10 padrão. Importar de novo nunca repete um artigo.
+
+**B. Escreva os seus posts** no `queue.json` (veja "O formato do post" abaixo) ou na página do próximo passo.
+
+#### Revise, edite e aprove numa página
+
+Os posts importados são **rascunhos**: só são agendados depois que você aprovar. Abra a página de revisão:
+
+```sh
+python3 serve.py
+```
+
+Depois abra http://127.0.0.1:8765 no navegador.
+
+![A página da fila: rascunhos e aprovados, uma caixa de texto por rede (imagem em inglês)](docs/img/queue-page.png)
+
+Ali você corrige o texto (um contador mostra o limite de cada rede), muda o dia e a hora, aprova, volta para rascunho, apaga ou cria um post novo. Clique em **Save changes**. Posts que já estão no Buffer ficam travados, porque mudar aqui não mudaria o Buffer.
+
+A página roda só no seu computador e nada é enviado ao Buffer por ela. Quando você roda o `refill.py`, ele agenda **só os posts aprovados**.
+
+#### O formato do post
+
+Se quiser editar o `queue.json` à mão, cada post é assim:
 
 ![Anatomia de um post no queue.json (imagem em inglês)](docs/img/queue-anatomy.svg)
 
 Dicas:
 
+- `status` é opcional: `"draft"` espera aprovação; `"approved"` (ou sem `status`) é agendado.
 - Copie um bloco de post inteiro, cole logo depois e edite. Mantenha as vírgulas entre os blocos.
 - Os nomes das redes em `text` têm de ser os que o setup mostrou (por exemplo `twitter`, `threads`, `linkedin`).
 - Você pode deixar uma rede de fora de um post para pular a rede naquele post.
@@ -75,7 +106,7 @@ Dicas:
 
 ### 4. Rode
 
-Primeiro, deixe na fila **só um ou dois posts**. Depois:
+Primeiro, aprove **só um ou dois posts**. Depois:
 
 ```sh
 python3 refill.py
@@ -119,7 +150,7 @@ Opcional: o `watchdog.py` mostra uma notificação no Mac se o reabastecimento p
 
 **"Buffer answered with an error".** A chave está errada ou venceu. Crie outra e rode o setup de novo.
 
-**Ele posta algo que eu não escrevi?** Não. Só agenda o que está no `queue.json`.
+**Ele posta algo que eu não aprovei?** Não. Artigos importados são rascunhos e só os aprovados são agendados.
 
 **Quero mudar os horários.** Abra o `config.json` e edite `grid` (formato 24 horas, no seu fuso).
 
@@ -133,7 +164,7 @@ Opcional: o `watchdog.py` mostra uma notificação no Mac se o reabastecimento p
 
 ## Como funciona por dentro
 
-Para quem gosta de detalhe. O `refill.py` lê o `queue.json`, pergunta ao Buffer quais posts já existem (últimos 21 dias), conta quantos estão agendados por rede e cria os que faltam até o `limit` (10 por padrão). Item atrasado vai para o próximo horário livre da sua `grid`. O id do post do Buffer é gravado de volta no `queue.json`, por isso rodar de novo é seguro. Tudo está em dois arquivos Python pequenos, sem bibliotecas extras.
+Para quem gosta de detalhe. O `import_feed.py` lê um feed público e cria rascunhos. O `serve.py` é uma página local para editar e aprovar. O `refill.py` lê o `queue.json`, pergunta ao Buffer quais posts já existem (últimos 21 dias), conta quantos estão agendados por rede e cria os que faltam até o `limit` (10 por padrão). Item atrasado vai para o próximo horário livre da sua `grid`. O id do post do Buffer é gravado de volta no `queue.json`, por isso rodar de novo é seguro. Tudo é Python simples, sem bibliotecas extras.
 
 ## Licença
 
