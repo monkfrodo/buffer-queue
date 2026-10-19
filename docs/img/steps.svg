@@ -4,7 +4,7 @@
 <g font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">
 <g><circle cx="130" cy="108" r="24" fill="#1F4E46"/><text x="130" y="116" font-size="22" font-weight="700" fill="#fff">1</text><text x="130" y="158" font-size="16" font-weight="700" fill="#1F2933">Download</text><text x="130" y="180" font-size="14" fill="#52606D">this project</text></g>
 <g><circle cx="370" cy="108" r="24" fill="#1F4E46"/><text x="370" y="116" font-size="22" font-weight="700" fill="#fff">2</text><text x="370" y="158" font-size="16" font-weight="700" fill="#1F2933">Run the setup</text><text x="370" y="180" font-size="14" fill="#52606D">python3 setup.py</text></g>
-<g><circle cx="610" cy="108" r="24" fill="#1F4E46"/><text x="610" y="116" font-size="22" font-weight="700" fill="#fff">3</text><text x="610" y="158" font-size="16" font-weight="700" fill="#1F2933">Write your posts</text><text x="610" y="180" font-size="14" fill="#52606D">in queue.json</text></g>
+<g><circle cx="610" cy="108" r="24" fill="#1F4E46"/><text x="610" y="116" font-size="22" font-weight="700" fill="#fff">3</text><text x="610" y="158" font-size="16" font-weight="700" fill="#1F2933">Fill your queue</text><text x="610" y="180" font-size="14" fill="#52606D">import, edit, approve</text></g>
 <g><circle cx="830" cy="108" r="24" fill="#1F4E46"/><text x="830" y="116" font-size="22" font-weight="700" fill="#fff">4</text><text x="830" y="158" font-size="16" font-weight="700" fill="#1F2933">Run it</text><text x="830" y="180" font-size="14" fill="#52606D">python3 refill.py</text></g>
 </g>
 <g stroke="#D9D3C3" stroke-width="3" stroke-linecap="round"><path d="M170 108 H330"/><path d="M410 108 H570"/><path d="M650 108 H790"/></g>
