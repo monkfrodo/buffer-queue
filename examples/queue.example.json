@@ -1,0 +1,19 @@
+[
+ {
+  "id": "2026-01-01_example_01",
+  "due": "2026-01-02T09:30:00-03:00",
+  "text": {
+   "twitter": "Short version of the idea, written for X.",
+   "threads": "Longer version of the same idea.\n\nThreads allows a few paragraphs, so say the whole thing."
+  },
+  "buffer": {}
+ },
+ {
+  "id": "2026-01-01_example_02",
+  "due": "2026-01-02T13:30:00-03:00",
+  "text": {
+   "twitter": "A second post. Only channels listed in `text` get scheduled."
+  },
+  "buffer": {}
+ }
+]

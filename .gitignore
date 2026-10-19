@@ -1,0 +1,11 @@
+# your content and your account: never commit
+config.json
+queue.json
+*.log
+*.bak
+*.tmp
+.env
+.env.*
+api-key
+*.key
+node_modules/

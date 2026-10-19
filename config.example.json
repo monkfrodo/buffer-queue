@@ -1,0 +1,11 @@
+{
+  "organization_id": "YOUR_BUFFER_ORGANIZATION_ID",
+  "channels": {
+    "twitter": "YOUR_TWITTER_CHANNEL_ID",
+    "threads": "YOUR_THREADS_CHANNEL_ID"
+  },
+  "limit": 10,
+  "timezone": "America/Sao_Paulo",
+  "grid": ["07:30", "09:30", "11:30", "13:30", "15:00", "17:00", "18:30", "21:00"],
+  "buffer_cli": "buffer"
+}
