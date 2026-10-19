@@ -65,15 +65,15 @@ def main():
         key = getpass.getpass("API key: ").strip()
         if not key:
             sys.exit("No key received.")
+    os.environ["BUFFER_API_KEY"] = key
+
+    step(3, "Finding your Buffer account")
+    account = buffer_json("account")  # also proves the key works, so a wrong key is never saved
     os.makedirs(KEY_DIR, mode=0o700, exist_ok=True)
     fd = os.open(KEY_FILE, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
     os.write(fd, key.encode())
     os.close(fd)
-    os.environ["BUFFER_API_KEY"] = key
-    say(f"Key saved privately at {KEY_FILE} (only you can read it).")
-
-    step(3, "Finding your Buffer account")
-    account = buffer_json("account")
+    say(f"Key works. Saved privately at {KEY_FILE} (only you can read it).")
     orgs = account.get("organizations", [])
     if not orgs:
         sys.exit("No organization found in this Buffer account.")
