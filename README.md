@@ -47,7 +47,11 @@ python3 setup.py
 
 (On Windows, use `python setup.py`.)
 
-It asks a few questions and does the rest:
+It asks a few questions and does the rest. This is what you will see (the account name is made up):
+
+![Terminal showing the guided setup](docs/img/terminal-setup.png)
+
+What it does:
 
 1. Installs Buffer's official tool, if missing.
 2. Asks for your **Buffer API key**. This is like a password that lets this tool schedule posts for you. Create one in your Buffer account settings (look for the API or developer section; [Buffer's help center](https://support.buffer.com) has the current steps). Paste it when asked. **Nothing shows on screen while you paste. That is normal.**
@@ -77,7 +81,15 @@ First, make sure the queue only has **one or two posts**, then:
 python3 refill.py
 ```
 
-Open Buffer. You should see those posts scheduled. If it looks right, add the rest of your posts and run it again. It is safe to run as many times as you like: it never posts the same text twice.
+The result looks like this:
+
+![Terminal showing two posts scheduled on two networks](docs/img/terminal-refill.png)
+
+Open Buffer. You should see those posts scheduled, like in this illustration:
+
+![Illustration of the Buffer queue with two scheduled posts](docs/img/buffer-result.svg)
+
+The terminal screens above are real output from this tool, run against a simulated Buffer with made-up data. The Buffer screen is an illustration, not a real screenshot. If it looks right, add the rest of your posts and run it again. It is safe to run as many times as you like: it never posts the same text twice.
 
 ## Make it run by itself
 

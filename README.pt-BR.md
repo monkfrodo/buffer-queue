@@ -47,7 +47,11 @@ python3 setup.py
 
 (No Windows, use `python setup.py`.)
 
-Ele faz algumas perguntas e resolve o resto:
+Ele faz algumas perguntas e resolve o resto. É isto que você vai ver (o nome da conta é inventado):
+
+![Terminal mostrando a instalação guiada](docs/img/terminal-setup.png)
+
+O que ele faz:
 
 1. Instala a ferramenta oficial do Buffer, se faltar.
 2. Pede a sua **chave de API do Buffer**. Ela funciona como uma senha que deixa esta ferramenta agendar posts por você. Crie uma nas configurações da sua conta do Buffer (procure a seção de API ou desenvolvedor; a [central de ajuda do Buffer](https://support.buffer.com) tem o passo a passo atual). Cole quando pedir. **Nada aparece na tela enquanto você cola. É normal.**
@@ -77,7 +81,15 @@ Primeiro, deixe na fila **só um ou dois posts**. Depois:
 python3 refill.py
 ```
 
-Abra o Buffer. Os posts devem aparecer agendados. Se estiver certo, coloque o resto dos posts e rode de novo. Pode rodar quantas vezes quiser: a ferramenta nunca agenda o mesmo texto duas vezes.
+O resultado fica assim:
+
+![Terminal mostrando dois posts agendados em duas redes](docs/img/terminal-refill.png)
+
+Abra o Buffer. Os posts devem aparecer agendados, como nesta ilustração:
+
+![Ilustração da fila do Buffer com dois posts agendados](docs/img/buffer-result.svg)
+
+As telas de terminal acima são saída real desta ferramenta, rodada contra um Buffer simulado com dados inventados. A tela do Buffer é uma ilustração, não um print real. Se estiver certo, coloque o resto dos posts e rode de novo. Pode rodar quantas vezes quiser: a ferramenta nunca agenda o mesmo texto duas vezes.
 
 ## Fazer rodar sozinho
 

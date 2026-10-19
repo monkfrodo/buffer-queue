@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" width="960" height="400" role="img" aria-label="Illustration of the Buffer queue after running refill.py: scheduled posts per network">
+<rect width="960" height="400" rx="20" fill="#F7F5EF"/>
+<text x="480" y="44" text-anchor="middle" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="22" font-weight="700" fill="#1F2933">What you will see in Buffer afterwards</text>
+<g font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
+<rect x="60" y="68" width="840" height="276" rx="14" fill="#fff" stroke="#D9D3C3" stroke-width="2"/>
+<rect x="60" y="68" width="840" height="46" rx="14" fill="#EEF1F4"/><rect x="60" y="100" width="840" height="14" fill="#EEF1F4"/>
+<text x="84" y="98" font-size="16" font-weight="700" fill="#1F2933">Queue</text>
+<text x="160" y="98" font-size="14" fill="#52606D">mytestaccount · X</text>
+<text x="876" y="98" text-anchor="end" font-size="14" fill="#52606D">2 of 10 scheduled</text>
+<g><rect x="84" y="134" width="792" height="82" rx="10" fill="#F7F5EF"/>
+<text x="104" y="164" font-size="15" font-weight="700" fill="#1F4E46">Wed, Oct 21 · 9:30 AM</text>
+<text x="104" y="192" font-size="16" fill="#1F2933">My first scheduled post.</text>
+<rect x="780" y="152" width="76" height="26" rx="13" fill="#DDE9E5"/><text x="818" y="170" text-anchor="middle" font-size="13" fill="#1F4E46">Scheduled</text></g>
+<g><rect x="84" y="230" width="792" height="82" rx="10" fill="#F7F5EF"/>
+<text x="104" y="260" font-size="15" font-weight="700" fill="#1F4E46">Wed, Oct 21 · 1:30 PM</text>
+<text x="104" y="288" font-size="16" fill="#1F2933">A second post.</text>
+<rect x="780" y="248" width="76" height="26" rx="13" fill="#DDE9E5"/><text x="818" y="266" text-anchor="middle" font-size="13" fill="#1F4E46">Scheduled</text></g>
+<text x="480" y="334" text-anchor="middle" font-size="12" fill="#9AA5B1">…</text>
+</g>
+<text x="480" y="378" text-anchor="middle" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="13" fill="#52606D">Illustration drawn for this guide, not a real screenshot. Buffer's own screens look different and change over time.</text>
+</svg>
