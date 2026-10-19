@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 360" width="960" height="360" role="img" aria-label="How buffer-queue works: you write posts in a file, the script sends them to Buffer, Buffer publishes on your social networks">
+<rect width="960" height="360" rx="20" fill="#F7F5EF"/>
+<text x="480" y="52" text-anchor="middle" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#1F2933">You write once. Buffer posts for weeks.</text>
+<g font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" text-anchor="middle">
+<rect x="40" y="100" width="190" height="170" rx="16" fill="#fff" stroke="#D9D3C3" stroke-width="2"/>
+<text x="135" y="150" font-size="44">📝</text>
+<text x="135" y="195" font-size="18" font-weight="700" fill="#1F2933">1. Your posts</text>
+<text x="135" y="220" font-size="14" fill="#52606D">in one simple file</text>
+<text x="135" y="240" font-size="14" fill="#52606D">(queue.json)</text>
+<rect x="290" y="100" width="190" height="170" rx="16" fill="#fff" stroke="#D9D3C3" stroke-width="2"/>
+<text x="385" y="150" font-size="44">🤖</text>
+<text x="385" y="195" font-size="18" font-weight="700" fill="#1F2933">2. This tool</text>
+<text x="385" y="220" font-size="14" fill="#52606D">runs twice a day and</text>
+<text x="385" y="240" font-size="14" fill="#52606D">sends the next posts</text>
+<rect x="540" y="100" width="190" height="170" rx="16" fill="#fff" stroke="#D9D3C3" stroke-width="2"/>
+<text x="635" y="150" font-size="44">🗓️</text>
+<text x="635" y="195" font-size="18" font-weight="700" fill="#1F2933">3. Buffer</text>
+<text x="635" y="220" font-size="14" fill="#52606D">keeps them scheduled</text>
+<text x="635" y="240" font-size="14" fill="#52606D">at the hours you chose</text>
+<rect x="790" y="100" width="130" height="170" rx="16" fill="#1F4E46"/>
+<text x="855" y="150" font-size="44">🌐</text>
+<text x="855" y="195" font-size="18" font-weight="700" fill="#fff">4. Posted</text>
+<text x="855" y="220" font-size="14" fill="#DDE9E5">X, Threads,</text>
+<text x="855" y="240" font-size="14" fill="#DDE9E5">LinkedIn...</text>
+</g>
+<g fill="none" stroke="#1F4E46" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+<path d="M238 185 H282 M272 175 L282 185 L272 195"/>
+<path d="M488 185 H532 M522 175 L532 185 L522 195"/>
+<path d="M738 185 H782 M772 175 L782 185 L772 195"/>
+</g>
+<text x="480" y="318" text-anchor="middle" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="16" fill="#52606D">No AI, no server, no monthly fee. Only a small Python script and the free Buffer plan.</text>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" width="960" height="420" role="img" aria-label="Anatomy of a post in queue.json">
+<rect width="960" height="420" rx="20" fill="#F7F5EF"/>
+<text x="480" y="46" text-anchor="middle" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="24" font-weight="700" fill="#1F2933">Each post in queue.json looks like this</text>
+<rect x="40" y="75" width="520" height="310" rx="14" fill="#1F2933"/>
+<g font-family="Menlo,Consolas,monospace" font-size="16" fill="#E4E7EB" xml:space="preserve">
+<text x="64" y="112">{</text>
+<text x="88" y="142"><tspan fill="#8AB4F8">"id"</tspan>: <tspan fill="#A5D6A7">"my-first-post"</tspan>,</text>
+<text x="88" y="178"><tspan fill="#8AB4F8">"due"</tspan>: <tspan fill="#A5D6A7">"2026-01-02T09:30:00-03:00"</tspan>,</text>
+<text x="88" y="214"><tspan fill="#8AB4F8">"text"</tspan>: {</text>
+<text x="112" y="244"><tspan fill="#8AB4F8">"twitter"</tspan>: <tspan fill="#A5D6A7">"Short text for X"</tspan>,</text>
+<text x="112" y="274"><tspan fill="#8AB4F8">"threads"</tspan>: <tspan fill="#A5D6A7">"Longer text..."</tspan></text>
+<text x="88" y="304">},</text>
+<text x="88" y="340"><tspan fill="#8AB4F8">"buffer"</tspan>: {}</text>
+<text x="64" y="372">}</text>
+</g>
+<g font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="15" fill="#1F2933">
+<g><circle cx="600" cy="138" r="13" fill="#1F4E46"/><text x="600" y="143" text-anchor="middle" fill="#fff" font-weight="700" font-size="14">1</text><text x="625" y="135" font-weight="700">id</text><text x="625" y="155" fill="#52606D">any name, just not repeated</text></g>
+<g><circle cx="600" cy="204" r="13" fill="#1F4E46"/><text x="600" y="209" text-anchor="middle" fill="#fff" font-weight="700" font-size="14">2</text><text x="625" y="201" font-weight="700">due</text><text x="625" y="221" fill="#52606D">when to post: date, then T, then the hour</text><text x="625" y="241" fill="#52606D">(already past? the tool picks the next free hour)</text></g>
+<g><circle cx="600" cy="284" r="13" fill="#1F4E46"/><text x="600" y="289" text-anchor="middle" fill="#fff" font-weight="700" font-size="14">3</text><text x="625" y="281" font-weight="700">text</text><text x="625" y="301" fill="#52606D">one text per social network.</text><text x="625" y="321" fill="#52606D">Leave a network out to skip it for this post.</text></g>
+<g><circle cx="600" cy="352" r="13" fill="#1F4E46"/><text x="600" y="357" text-anchor="middle" fill="#fff" font-weight="700" font-size="14">4</text><text x="625" y="349" font-weight="700">buffer</text><text x="625" y="369" fill="#52606D">leave as {} — the tool fills it in</text></g>
+</g>
+</svg>

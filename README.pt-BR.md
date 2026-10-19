@@ -1,114 +1,128 @@
 # buffer-queue
 
-Mantém o seu Buffer sempre cheio sem você abrir o Buffer. Você escreve os posts num `queue.json` local e um script pequeno agenda canal por canal, até o limite do plano grátis (10 agendados por canal). Rodando duas vezes por dia, a fila se esvazia sozinha.
+**Escreva seus posts uma vez. Deixe sair sozinho por semanas.**
 
-Sem IA, sem servidor, sem banco de dados. Só Python 3 e a CLI oficial do Buffer.
+![Como funciona: seus posts, esta ferramenta, o Buffer, suas redes (imagem em inglês)](docs/img/how-it-works.svg)
 
 [Read in English](README.md)
 
-## O que faz
+## O que é isto?
 
-- Lê o `queue.json`: cada item tem um horário e um texto por canal.
-- Agenda cada item no Buffer até o canal bater no limite.
-- Não duplica: se o mesmo texto já está no Buffer, só faz o vínculo.
-- Se o horário do item já passou, remarca para o próximo horário livre da sua grade.
-- Grava o id do post do Buffer de volta no `queue.json`, então rodar de novo é seguro.
-- O `watchdog.py` avisa se o reabastecimento parou ou se a fila está acabando.
+O [Buffer](https://buffer.com) é uma ferramenta gratuita que publica posts nas suas redes sociais no horário que você escolher. O plano grátis só deixa **10 posts agendados por rede** ao mesmo tempo. Então, a cada poucos dias, você precisa voltar lá e agendar mais.
 
-## Jeito mais rápido: deixe um agente de IA fazer
+**O buffer-queue acaba com essa tarefa.** Você guarda todos os posts futuros num arquivo de texto simples. Duas vezes por dia, a ferramenta olha o Buffer, vê quais redes têm espaço e agenda os próximos posts para você. Você escreve quando der vontade. A ferramenta agenda.
 
-Abra o [PROMPT.md](PROMPT.md) (em inglês), cole o prompt no Claude Code, Codex ou similar, e ele conduz a instalação inteira sem nunca ver a sua chave de API.
+É grátis, roda no seu computador, não usa IA nem servidor, e seus posts não vão para lugar nenhum além do Buffer.
 
-## Instalação (manual)
+## O que você precisa
 
-1. **Instale a CLI do Buffer** (precisa de Node.js):
+| Você precisa de | Onde conseguir |
+|---|---|
+| Conta grátis no Buffer, com pelo menos uma rede conectada | [buffer.com](https://buffer.com) |
+| Python 3 | Já vem no Mac. No Windows: [python.org/downloads](https://www.python.org/downloads/) (marque "Add Python to PATH") |
+| Node.js (para instalar a ferramenta oficial do Buffer) | [nodejs.org](https://nodejs.org) (botão "LTS") |
 
-   ```sh
-   npm install --prefix ~/.local/share/buffer-cli @bufferapp/cli
-   ```
+Se preferir, um assistente de IA faz a instalação inteira com você: veja o [PROMPT.md](PROMPT.md) (em inglês).
 
-   No `config.json`, aponte `buffer_cli` para `~/.local/share/buffer-cli/node_modules/.bin/buffer` (caminho absoluto) ou deixe `buffer` no PATH.
+## Instalação em 4 passos
 
-2. **Crie uma chave de API** nas configurações da sua conta do Buffer. Trate como senha.
+![Instalação: baixar, rodar o setup, escrever os posts, rodar (imagem em inglês)](docs/img/steps.svg)
 
-3. **Guarde a chave fora do projeto**, legível só por você:
+### 1. Baixe este projeto
 
-   ```sh
-   mkdir -p ~/.config/buffer-queue && chmod 700 ~/.config/buffer-queue
-   read -rs KEY && printf %s "$KEY" > ~/.config/buffer-queue/api-key && unset KEY
-   chmod 600 ~/.config/buffer-queue/api-key
-   ```
+Nesta página, clique no botão verde **Code** e depois em **Download ZIP**. Abra o ZIP para virar uma pasta chamada `buffer-queue-main`.
 
-   A chave nunca vai para `config.json`, `queue.json` nem para o repositório. Os dois arquivos estão no `.gitignore`.
+### 2. Rode a instalação guiada
 
-4. **Descubra os seus ids.** Com a chave carregada:
+Abra um terminal dentro dessa pasta.
 
-   ```sh
-   export BUFFER_API_KEY="$(cat ~/.config/buffer-queue/api-key)"
-   buffer account --output json
-   buffer channels --help
-   ```
+- **Mac:** aperte `Cmd + Espaço`, digite `Terminal`, Enter. Digite `cd ` (com espaço), arraste a pasta `buffer-queue-main` para a janela e aperte Enter.
+- **Windows:** abra a pasta, clique na barra de endereço, digite `powershell` e aperte Enter.
 
-   O id da organização e dos canais não são segredo, mas são seus. Deixe só no `config.json`.
-
-5. **Crie a configuração e a fila:**
-
-   ```sh
-   cp config.example.json config.json
-   cp examples/queue.example.json queue.json
-   ```
-
-   Edite o `config.json`: id da organização, ids dos canais, fuso horário e grade de horários. Os nomes dos canais (`twitter`, `threads`, ...) precisam bater com o nome do serviço no Buffer, porque o script reconhece posts existentes por serviço.
-
-## Formato da fila
-
-```json
-[
- {
-  "id": "qualquer-id-unico",
-  "due": "2026-01-02T09:30:00-03:00",
-  "text": { "twitter": "Texto para o X", "threads": "Texto para o Threads" },
-  "buffer": {}
- }
-]
-```
-
-- `due`: ISO 8601 com fuso. O script pode mudar se o horário já passou.
-- `text`: um texto por canal. Canal que não está aqui é ignorado naquele item.
-- `buffer`: o script preenche com os ids do Buffer. Comece com `{}`.
-
-## Rodar
+Depois rode:
 
 ```sh
-export BUFFER_API_KEY="$(cat ~/.config/buffer-queue/api-key)"
-python3 -I refill.py
+python3 setup.py
 ```
 
-Teste com um item só e confira no Buffer antes de encher a fila.
+(No Windows, use `python setup.py`.)
 
-## Rodar sozinho
+Ele faz algumas perguntas e resolve o resto:
 
-**macOS (launchd).** Copie `launchd/com.example.buffer-refill.plist` para `~/Library/LaunchAgents/`, troque `/ABSOLUTE/PATH/TO/` pelo caminho real e rode:
+1. Instala a ferramenta oficial do Buffer, se faltar.
+2. Pede a sua **chave de API do Buffer**. Ela funciona como uma senha que deixa esta ferramenta agendar posts por você. Crie uma nas configurações da sua conta do Buffer (procure a seção de API ou desenvolvedor; a [central de ajuda do Buffer](https://support.buffer.com) tem o passo a passo atual). Cole quando pedir. **Nada aparece na tela enquanto você cola. É normal.**
+3. Encontra a sua conta e lista as redes conectadas. Você escolhe quais usar.
+4. Pergunta o seu fuso horário e salva tudo.
+
+A chave fica num arquivo privado no seu computador, fora desta pasta. Ela nunca está dentro do projeto, então você não consegue publicá-la sem querer.
+
+### 3. Escreva os seus posts
+
+Abra o `queue.json` em qualquer editor de texto. O setup criou o arquivo com dois posts de exemplo. Troque pelos seus. Cada post é assim:
+
+![Anatomia de um post no queue.json (imagem em inglês)](docs/img/queue-anatomy.svg)
+
+Dicas:
+
+- Copie um bloco de post inteiro, cole logo depois e edite. Mantenha as vírgulas entre os blocos.
+- Os nomes das redes em `text` têm de ser os que o setup mostrou (por exemplo `twitter`, `threads`, `linkedin`).
+- Você pode deixar uma rede de fora de um post para pular a rede naquele post.
+- Se o arquivo quebrar, um verificador grátis como o [jsonlint.com](https://jsonlint.com) mostra onde.
+
+### 4. Rode
+
+Primeiro, deixe na fila **só um ou dois posts**. Depois:
 
 ```sh
-launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.example.buffer-refill.plist
-launchctl kickstart gui/$(id -u)/com.example.buffer-refill
+python3 refill.py
 ```
 
-**Linux (cron):**
+Abra o Buffer. Os posts devem aparecer agendados. Se estiver certo, coloque o resto dos posts e rode de novo. Pode rodar quantas vezes quiser: a ferramenta nunca agenda o mesmo texto duas vezes.
 
-```cron
-0 8,20 * * * BUFFER_API_KEY="$(cat $HOME/.config/buffer-queue/api-key)" /usr/bin/python3 -I /caminho/buffer-queue/refill.py >> /caminho/buffer-queue/refill.log 2>&1
-```
+## Fazer rodar sozinho
 
-Opcional: rode `python3 watchdog.py` algumas vezes por dia para ser avisado quando o reabastecimento travar.
+Só faça isto depois que o passo 4 funcionar.
 
-## Segurança se você fizer fork
+- **Mac:** copie `launchd/com.example.buffer-refill.plist` para `~/Library/LaunchAgents/`, troque os dois `/ABSOLUTE/PATH/TO/` pelo caminho real da pasta e rode:
 
-- Nunca faça commit de `config.json`, `queue.json`, logs ou chaves. O `.gitignore` cobre, mas confira o `git status` antes de cada push.
-- Nunca cole a chave em chat, issue ou pull request. Se vazar, revogue no Buffer e crie outra.
-- Use uma chave só para esta ferramenta, para poder revogar sem quebrar mais nada.
+  ```sh
+  launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.example.buffer-refill.plist
+  ```
+
+- **Linux:** adicione esta linha com `crontab -e` (ajuste o caminho):
+
+  ```cron
+  0 8,20 * * * /usr/bin/python3 -I /caminho/buffer-queue/refill.py >> /caminho/buffer-queue/refill.log 2>&1
+  ```
+
+- **Windows:** use o Agendador de Tarefas para rodar `python refill.py` nesta pasta duas vezes por dia.
+
+Opcional: o `watchdog.py` mostra uma notificação no Mac se o reabastecimento parou ou se a fila está quase vazia. Agende da mesma forma.
+
+## Dúvidas e problemas
+
+**Nada acontece quando rodo o `refill.py`.** Leia as últimas linhas que ele escreveu. `scheduled in Buffer: {...}` mostra quantos posts cada rede já tem. Se uma rede está em 10, o limite do plano grátis, a ferramenta espera alguns saírem.
+
+**"config not found".** Rode `python3 setup.py` antes.
+
+**"Buffer answered with an error".** A chave está errada ou venceu. Crie outra e rode o setup de novo.
+
+**Ele posta algo que eu não escrevi?** Não. Só agenda o que está no `queue.json`.
+
+**Quero mudar os horários.** Abra o `config.json` e edite `grid` (formato 24 horas, no seu fuso).
+
+**Quero apagar um post agendado.** Apague no Buffer. Se tirar também do `queue.json`, ele não será agendado de novo.
+
+## Proteja a sua conta
+
+- Nunca compartilhe `config.json`, `queue.json`, os logs nem a chave. Se você copiar este projeto para o GitHub, eles já são ignorados pelo `.gitignore`. Mesmo assim, rode `git status` antes de cada push.
+- Nunca cole a chave em chat, issue ou pull request. Se vazar, apague no Buffer e crie outra.
+- Use uma chave só para esta ferramenta, para poder apagar sem quebrar mais nada.
+
+## Como funciona por dentro
+
+Para quem gosta de detalhe. O `refill.py` lê o `queue.json`, pergunta ao Buffer quais posts já existem (últimos 21 dias), conta quantos estão agendados por rede e cria os que faltam até o `limit` (10 por padrão). Item atrasado vai para o próximo horário livre da sua `grid`. O id do post do Buffer é gravado de volta no `queue.json`, por isso rodar de novo é seguro. Tudo está em dois arquivos Python pequenos, sem bibliotecas extras.
 
 ## Licença
 
-MIT
+MIT. Use, mude, compartilhe.

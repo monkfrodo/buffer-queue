@@ -6,7 +6,7 @@ script schedules posts up to Buffer's per-channel limit, skips text that is
 already in Buffer (so it never duplicates), and moves overdue items to the
 next free slot of your posting grid.
 
-Usage: BUFFER_API_KEY=... python3 -I refill.py
+Usage: python3 refill.py   (reads the key saved by setup.py, or BUFFER_API_KEY)
 """
 import json
 import os
@@ -19,6 +19,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 CONFIG = os.environ.get("BUFFER_QUEUE_CONFIG", os.path.join(HERE, "config.json"))
 QUEUE = os.environ.get("BUFFER_QUEUE_FILE", os.path.join(HERE, "queue.json"))
 MARGIN = timedelta(minutes=20)
+KEYFILE = os.path.expanduser("~/.config/buffer-queue/api-key")
+if not os.environ.get("BUFFER_API_KEY") and os.path.exists(KEYFILE):
+    os.environ["BUFFER_API_KEY"] = open(KEYFILE).read().strip()
 
 
 def load_config():
